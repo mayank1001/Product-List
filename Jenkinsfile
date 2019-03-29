@@ -23,14 +23,15 @@ stage('Commit'){
 	    findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/findbugsXml.xml', unHealthy: ''
             pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
 	}
-        stash includes: 'target/product-list.zip', name: 'ARTIFACTS'
+        sh 'mvn package'
+	stash includes: 'target/product-list.jar', name: 'ARTIFACTS'
     }
 }
 
 stage('Integration') {
     cleanNode {
         unstash 'ARTIFACTS'
-        sh 'unzip -o "target/product-list.zip" -d "."'
+        sh 'mvn package'
         pushApplication(cfIntegrationSpace)
     }
     cleanNode {
@@ -50,7 +51,7 @@ stage('Integration') {
 stage ('Acceptance') {
     cleanNode {
         unstash 'ARTIFACTS'
-        sh 'unzip -o "target/product-list.zip" -d "."'
+        sh 'mvn package'
         pushApplication(cfAcceptanceSpace)
 	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
         After successful test, please go to the pipeline
