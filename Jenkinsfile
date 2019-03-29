@@ -23,16 +23,14 @@ stage('Commit'){
 	    findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/findbugsXml.xml', unHealthy: ''
             pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
 	}
-	stash includes: 'target/product-list.jar', name: 'ARTIFACTS'
+	stash includes: 'target/product-list.zip', name: 'ARTIFACTS'
     }
 }
 
 stage('Integration') {
     cleanNode {
         unstash 'ARTIFACTS'
-        sh '''cd \'/var/jenkins_home/jobs/Test Pipeline/workspace/\'
-        cd \'target\'
-        java -jar product-list.jar'''
+        sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfIntegrationSpace)
     }
     cleanNode {
@@ -52,9 +50,7 @@ stage('Integration') {
 stage ('Acceptance') {
     cleanNode {
         unstash 'ARTIFACTS'
-        sh '''cd \'/var/jenkins_home/jobs/Test Pipeline/workspace/\'
-        cd \'target\'
-        java -jar product-list.jar'''
+        sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfAcceptanceSpace)
 	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
         After successful test, please go to the pipeline
