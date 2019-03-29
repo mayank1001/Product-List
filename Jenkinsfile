@@ -1,4 +1,3 @@
-sapUserId = 'I859041'
 githubUserId = 'mayank1001'
 forkedRepositorySshUrl = "git@github.com:${githubUserId}/Product-List.git"
 forkedRepositoryName = "${githubUserId}/Product-List"
