@@ -31,6 +31,7 @@ stage('Integration') {
     cleanNode {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
+	sh 'cd /var/jenkins_home/jobs/Test Pipeline/workspace/target/product-list/
 	sh 'mvn package'
         pushApplication(cfIntegrationSpace)
     }
@@ -52,6 +53,8 @@ stage ('Acceptance') {
     cleanNode {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
+	sh 'cd /var/jenkins_home/jobs/Test Pipeline/workspace/target/product-list/
+	sh 'mvn package'
         pushApplication(cfAcceptanceSpace)
 	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
         After successful test, please go to the pipeline
