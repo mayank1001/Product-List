@@ -62,7 +62,7 @@ stage ('Acceptance') {
 
 stage('Production') {
     cleanNode {
-        def mvnGroupId = "com.sap.cc.devopscourse.${sapUserId}"
+        def mvnGroupId = "com.sap.cp.cf.i859041"
         def mvnArtifactId = "product-list"
         def mvnRepoUrl = "https://nexus.wdf.sap.corp:8443/nexus/content/groups/build.milestones"
         sh """
