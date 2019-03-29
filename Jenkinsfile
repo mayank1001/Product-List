@@ -23,7 +23,6 @@ stage('Commit'){
 	    findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/findbugsXml.xml', unHealthy: ''
             pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
 	}
-        sh 'mvn package'
 	stash includes: 'target/product-list.jar', name: 'ARTIFACTS'
     }
 }
@@ -32,7 +31,6 @@ stage('Integration') {
     cleanNode {
         unstash 'ARTIFACTS'
         sh '''cd \'/var/jenkins_home/jobs/Test Pipeline/workspace/\'
-        mvn clean install
         cd \'target\'
         java -jar product-list.jar'''
         pushApplication(cfIntegrationSpace)
@@ -55,7 +53,6 @@ stage ('Acceptance') {
     cleanNode {
         unstash 'ARTIFACTS'
         sh '''cd \'/var/jenkins_home/jobs/Test Pipeline/workspace/\'
-        mvn clean install
         cd \'target\'
         java -jar product-list.jar'''
         pushApplication(cfAcceptanceSpace)
