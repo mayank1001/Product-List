@@ -62,16 +62,12 @@ stage ('Acceptance') {
 
 stage('Production') {
     cleanNode {
-        def mvnGroupId = "com.sap.cp.cf.i859041"
-        def mvnArtifactId = "product-list"
-        def mvnRepoUrl = "https://nexus.wdf.sap.corp:8443/nexus/content/groups/build.milestones"
-        sh """
-            #Downloads artifact from
-            mvn -B org.apache.maven.plugins:maven-dependency-plugin:2.10:get -Dartifact=${mvnGroupId}:${mvnArtifactId}:${version}:zip -DremoteRepositories=${mvnRepoUrl} -Ddest=product-list.zip -Dtransitive=false
-            unzip -o "product-list.zip" -d "."
-        """
-
+        unstash 'ARTIFACTS'
+        sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfProductionSpace)
+	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
+        New version of microservice product-list available in Production""", subject: 'New version of microservice product-list promoted to Production', to: 'mayank.sharma05@sap.com'
+
     }
 }
 
