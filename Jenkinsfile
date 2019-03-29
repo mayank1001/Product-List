@@ -31,6 +31,7 @@ stage('Integration') {
     cleanNode {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
+	sh 'mvn package'
         pushApplication(cfIntegrationSpace)
     }
     cleanNode {
