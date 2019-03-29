@@ -31,7 +31,10 @@ stage('Commit'){
 stage('Integration') {
     cleanNode {
         unstash 'ARTIFACTS'
-        sh 'mvn package'
+        sh '''cd \'/var/jenkins_home/jobs/Test Pipeline/workspace/\'
+        mvn clean install
+        cd \'target\'
+        java -jar product-list.jar'''
         pushApplication(cfIntegrationSpace)
     }
     cleanNode {
@@ -51,7 +54,10 @@ stage('Integration') {
 stage ('Acceptance') {
     cleanNode {
         unstash 'ARTIFACTS'
-        sh 'mvn package'
+        sh '''cd \'/var/jenkins_home/jobs/Test Pipeline/workspace/\'
+        mvn clean install
+        cd \'target\'
+        java -jar product-list.jar'''
         pushApplication(cfAcceptanceSpace)
 	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
         After successful test, please go to the pipeline
