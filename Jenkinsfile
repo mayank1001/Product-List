@@ -1,6 +1,6 @@
 sapUserId = 'I859041'
 githubUserId = 'mayank1001'
-forkedRepositorySshUrl = "https://github.com/mayank1001/Product-List.git"
+forkedRepositorySshUrl = "git@github.com:${githubUserId}/Product-List.git"
 forkedRepositoryName = "${githubUserId}/Product-List"
 cfApiEndpoint = 'https://api.cf.sap.hana.ondemand.com'
 cfOrganization = 'SAPNACFDEMO'
