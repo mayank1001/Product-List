@@ -9,7 +9,7 @@
 		<version>1.5.4.RELEASE</version>
 	</parent>
 
-	<groupId>com.sap.cp.cf.demoapps</groupId>
+	<groupId>com.sap.cp.cf.i859041</groupId>
 	<artifactId>product-list</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
