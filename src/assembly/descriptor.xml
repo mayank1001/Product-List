@@ -1,0 +1,32 @@
+<assembly>
+	<id>dist</id>
+	
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>${project.basedir}</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>manifest*.yml</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/scripts</directory>
+			<outputDirectory>/scripts</outputDirectory>
+			<includes>
+				<include>*.rb</include>
+				<include>*.groovy</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<outputDirectory>/target</outputDirectory>
+			<includes>
+				<include>*.war</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>
