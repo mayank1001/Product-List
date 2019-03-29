@@ -25,7 +25,7 @@
 			<directory>${project.build.directory}</directory>
 			<outputDirectory>/target</outputDirectory>
 			<includes>
-				<include>*.war</include>
+				<include>*.jar</include>
 			</includes>
 		</fileSet>
 	</fileSets>
