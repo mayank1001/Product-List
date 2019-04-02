@@ -22,6 +22,7 @@ stage('Commit'){
             junit allowEmptyResults: true, testResults:'target/failsafe-reports/*.xml'
 	    findbugs canComputeNew: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', pattern: '**/findbugsXml.xml', unHealthy: ''
             pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
+            jacoco()
 	}
 	stash includes: 'target/product-list.zip', name: 'ARTIFACTS'
     }
