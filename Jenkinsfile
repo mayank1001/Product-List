@@ -65,7 +65,7 @@ stage('Production') {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfProductionSpace)
-	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
+	emailext body: """Link to the microservice: <a href="https://product-list-${cfProductionSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
         New version of microservice product-list available in Production""", subject: 'New version of microservice product-list promoted to Production', to: 'mayank.sharma05@sap.com'
 
     }
