@@ -4,6 +4,7 @@ applications:
 - name: product-list
   instances: 1
   memory: 896M
+  domain: cfapps.sap.hana.ondemand.com
   host: product-list-09291982
   path: target/product-list.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.17.2
