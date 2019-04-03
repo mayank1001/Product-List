@@ -53,7 +53,7 @@ stage ('Acceptance') {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfAcceptanceSpace)
-	emailext body: """Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
+	emailext body: """Link to the microservice: <a href="https://product-list-${cfAcceptanceSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
         After successful test, please go to the pipeline
 	<a href=\'${env.BUILD_URL}input\'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>
 	to start the promote build.""", subject: 'Please test a new version of microservice product-list', to: 'mayank.sharma05@sap.com'
@@ -82,7 +82,7 @@ def pushApplication(spaceName) {
 	]) {
         sh """
         cf login -u \${CF_USERNAME} -p \${CF_PASSWORD} -a ${cfApiEndpoint} -o ${cfOrganization} -s ${spaceName}
-        cf push -n product-list-${spaceName}
+        //cf push -n product-list-${spaceName}
 	ruby scripts/simple_blue_green.rb ${cfOrganization} ${spaceName} ${cfApiEndpoint} \${CF_USERNAME} \${CF_PASSWORD}
         """
     }
