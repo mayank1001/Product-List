@@ -65,7 +65,7 @@ class BlueGreenDeployer
   #Map a route to app_name
   def map_route(app_name, route_host, route_domain)
     #TODO 2: insert command for mapping the route
-    command = "cf map-route product-list-blue -n product-list cfapps.sap.hana.ondemand.com"
+    command = "cf map-route product-list-blue -n #{route_host} cfapps.sap.hana.ondemand.com"
     log_message = "- 2) Mapping #{app_name} to #{route_host}.#{route_domain}"
 
     execute_cf_command(command, log_message)
@@ -75,7 +75,7 @@ class BlueGreenDeployer
   def unmap_route(app_name, route_host, route_domain)
     if is_app_bound_to_route?(app_name, Route.new(route_host, route_domain))
       #TODO 3: insert command for unmapping the route
-      command = "cf unmap-route product-list -n product-list cfapps.sap.hana.ondemand.com"
+      command = "cf unmap-route product-list -n #{route_host} cfapps.sap.hana.ondemand.com"
       log_message = "- 3) Unmapping #{app_name} from #{route_host}.#{route_domain}"
 
       execute_cf_command(command, log_message)
