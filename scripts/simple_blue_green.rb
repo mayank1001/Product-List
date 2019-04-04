@@ -19,7 +19,7 @@ class BlueGreenDeployer
     # check blue or green deployed, decide which one to deploy and which one to stop
     current_color = get_deployed_color(app_name, main_route)
     new_color = get_other_color(current_color)
-    app_name_to_deploy = "#{app_name}#{new_color}"
+    app_name_to_deploy = "#{app_name}-#{@space}#{new_color}"
     app_host_to_deploy = "#{app_name}-#{@space}#{new_color}"
     app_name_to_stop = "#{app_name}#{current_color}"
 
@@ -56,7 +56,7 @@ class BlueGreenDeployer
   #Push an app with manifest
   def push(app_name, app_host)
     #TODO 1: insert push command
-    command = "cf push product-list-blue -n product-list-blue"
+    command = "cf push #{app_name} -n #{app_host}"
     log_message = "- 1) Pushing #{app_name}"
 
     execute_cf_command(command, log_message)
@@ -65,7 +65,7 @@ class BlueGreenDeployer
   #Map a route to app_name
   def map_route(app_name, route_host, route_domain)
     #TODO 2: insert command for mapping the route
-    command = "cf map-route product-list-blue -n #{route_host} cfapps.sap.hana.ondemand.com"
+    command = "cf map-route #{app_name} -n #{route_host} #{route_domain}"
     log_message = "- 2) Mapping #{app_name} to #{route_host}.#{route_domain}"
 
     execute_cf_command(command, log_message)
@@ -75,7 +75,7 @@ class BlueGreenDeployer
   def unmap_route(app_name, route_host, route_domain)
     if is_app_bound_to_route?(app_name, Route.new(route_host, route_domain))
       #TODO 3: insert command for unmapping the route
-      command = "cf unmap-route product-list -n #{route_host} cfapps.sap.hana.ondemand.com"
+      command = "cf unmap-route #{app_name} -n #{route_host} #{route_domain}"
       log_message = "- 3) Unmapping #{app_name} from #{route_host}.#{route_domain}"
 
       execute_cf_command(command, log_message)
@@ -87,7 +87,7 @@ class BlueGreenDeployer
   def stop_app (app_name)
     if is_app_running?(app_name)
       #TODO 4: insert command for stopping the app
-      command = "cf stop product-list"
+      command = "cf stop #{app_name}"
       log_message = "- 4) Stopping #{app_name}"
 
       execute_cf_command(command, log_message)
