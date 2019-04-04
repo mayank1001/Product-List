@@ -82,7 +82,7 @@ def pushApplication(spaceName) {
 	]) {
         sh """
         cf login -u \${CF_USERNAME} -p \${CF_PASSWORD} -a ${cfApiEndpoint} -o ${cfOrganization} -s ${spaceName}
-        //cf push -n product-list-${spaceName}
+        cf push -n product-list-${spaceName}
 	ruby scripts/simple_blue_green.rb ${cfOrganization} ${spaceName} ${cfApiEndpoint} \${CF_USERNAME} \${CF_PASSWORD}
         """
     }
