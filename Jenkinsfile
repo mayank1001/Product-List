@@ -42,7 +42,9 @@ stage('Integration') {
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             emailext body: """If this artifact should be tested, please go to the pipeline
             <a href=\'${env.BUILD_URL}/input\'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>
-            to start the deployment.""", subject: 'New version of microservice Product-List available', to: 'mayank.sharma05@sap.com'
+            to start the deployment.
+	    Link to the microservice: <a href="https://product-list-${cfIntegrationSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
+	    """, subject: 'New version of microservice Product-List available', to: 'mayank.sharma05@sap.com'
         }
     }
         input 'Should new version be tested in acceptance?'
@@ -53,7 +55,7 @@ stage ('Acceptance') {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfAcceptanceSpace)
-	emailext body: """Link to the microservice: <a href="https://product-list-${cfAcceptanceSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
+	emailext body: """Link to the microservice: <a href="https://product-list-${cfAcceptanceSpace}.${cfDomain}"> https://product-list-${cfAcceptanceSpace}.${cfDomain}</a></br></br>
         After successful test, please go to the pipeline
 	<a href=\'${env.BUILD_URL}input\'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>
 	to start the promote build.""", subject: 'Please test a new version of microservice product-list', to: 'mayank.sharma05@sap.com'
@@ -66,7 +68,7 @@ stage('Production') {
         unstash 'ARTIFACTS'
         sh 'unzip -o "target/product-list.zip" -d "."'
         pushApplication(cfProductionSpace)
-	emailext body: """Link to the microservice: <a href="https://product-list-${cfProductionSpace}.${cfDomain}"> https://product-list-${cfIntegrationSpace}.${cfDomain}</a></br></br>
+	emailext body: """Link to the microservice: <a href="https://product-list-${cfProductionSpace}.${cfDomain}"> https://product-list-${cfProductionSpace}.${cfDomain}</a></br></br>
         New version of microservice product-list available in Production""", subject: 'New version of microservice product-list promoted to Production', to: 'mayank.sharma05@sap.com'
 
     }
