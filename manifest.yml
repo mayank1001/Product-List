@@ -1,7 +1,7 @@
 ---
 applications:
 # Application
-- name: product-list-green
+- name: product-list
   instances: 1
   memory: 896M
   domain: cfapps.sap.hana.ondemand.com
