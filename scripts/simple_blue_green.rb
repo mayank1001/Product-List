@@ -21,7 +21,7 @@ class BlueGreenDeployer
     new_color = get_other_color(current_color)
     app_name_to_deploy = "#{app_name}-#{@space}#{new_color}"
     app_host_to_deploy = "#{app_name}-#{@space}#{new_color}"
-    app_name_to_stop = "#{app_name}#{current_color}"
+    app_name_to_stop = "#{app_name}-#{@space}#{current_color}"
 
     puts "-- Starting Blue-Green Deployment! --"
     puts "- Will start #{app_name_to_deploy} and stop #{app_name_to_stop} ..."
