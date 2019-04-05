@@ -11,7 +11,7 @@
 
 	<groupId>com.sap.cp.cf.i859041</groupId>
 	<artifactId>product-list</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT-20190405-132812_6c136bba925abdf931b14c73079424867e1c91a5</version>
 	<packaging>jar</packaging>
 
 	<name>product-list</name>
